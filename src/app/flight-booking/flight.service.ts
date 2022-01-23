@@ -5,11 +5,13 @@ import { Flight } from './flight';
 // import { DefaultFlightService } from './default-flight.service';
 // import { DummyFlightService } from './dummy-flight.service';
 
-@Injectable(/*{
+import { createFlightService } from './flight-service.factory';
+
+@Injectable({
   providedIn: 'root',
-  // useClass: DefaultFlightService,
-  useClass: DummyFlightService
-}*/)
+  useFactory: createFlightService,
+  deps: [HttpClient]
+})
 export abstract class FlightService {
   flights: Flight[] = [];
   flightsSubject = new BehaviorSubject<Flight[]>([]);
