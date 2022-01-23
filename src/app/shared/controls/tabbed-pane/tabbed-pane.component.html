@@ -8,11 +8,7 @@
 
   <ng-content></ng-content>
 
-  <app-tab-navigator
-    #navigator
-    [page]="currentPage"
-    [pageCount]="tabs.length"
-    (pageChange)="pageChange($event)">
+  <app-tab-navigator #navigator [page]="currentPage">
   </app-tab-navigator>
 
   <div>
