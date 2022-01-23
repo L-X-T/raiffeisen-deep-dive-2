@@ -26,6 +26,13 @@ export const APP_ROUTES: Routes = [
     outlet: 'aux'
   },
   {
+    path: 'flight-booking',
+    loadChildren: () => import('./flight-booking/flight-booking.module').then((esm) => esm.FlightBookingModule),
+    data: {
+      preload: true
+    }
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
