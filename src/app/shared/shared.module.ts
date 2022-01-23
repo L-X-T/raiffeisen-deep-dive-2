@@ -15,6 +15,8 @@ import { TabComponent } from './controls/tab/tab.component';
 import { TabNavigatorComponent } from './controls/tab-navigator/tab-navigator.component';
 import { ClickWithWarningDirective } from './controls/click-with-warning.directive';
 import { TooltipDirective } from './tooltip.directive';
+import { TableFieldDirective } from './controls/data-table/table-field.directive';
+import { DataTableComponent } from './controls/data-table/data-table.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -30,7 +32,9 @@ import { TooltipDirective } from './tooltip.directive';
     TabComponent,
     TabNavigatorComponent,
     ClickWithWarningDirective,
-    TooltipDirective
+    TooltipDirective,
+    TableFieldDirective,
+    DataTableComponent
   ],
   exports: [
     DateComponent,
@@ -46,7 +50,9 @@ import { TooltipDirective } from './tooltip.directive';
     TabComponent,
     TabNavigatorComponent,
     ClickWithWarningDirective,
-    TooltipDirective
+    TooltipDirective,
+    TableFieldDirective,
+    DataTableComponent
   ]
 })
 export class SharedModule {}
