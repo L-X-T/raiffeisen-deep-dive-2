@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Flight } from './flight';
 import { FlightService } from './flight.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,14 @@ export class DummyFlightService implements FlightService {
     const newFlights = [newFlight, ...oldFlights.slice(1)];
     this.flightsSubject.next(newFlights);
     this.flights = newFlights;
+  }
+
+  findById(id: string): Observable<Flight> {
+    const url = 'http://www.angular.at/api/flight';
+    const params = new HttpParams().set('id', id);
+    const headers = new HttpHeaders().set('Accept', 'application/json');
+
+    return this.http.get<Flight>(url, { params, headers });
   }
 
   find(from: string, to: string): Observable<Flight[]> {

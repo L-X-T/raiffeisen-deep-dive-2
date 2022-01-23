@@ -14,6 +14,7 @@ import { AirportComponent } from './airport/airport.component';
 import { FlightService } from './flight.service';
 import { createFlightService } from './flight-service.factory';
 import { HttpClient } from '@angular/common/http';
+import { FlightResolver } from './flight-search/flight.resolver';
 
 @NgModule({
   imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, SharedModule],
@@ -26,6 +27,7 @@ import { HttpClient } from '@angular/common/http';
     AirportComponent
   ],
   providers: [
+    FlightResolver,
     {
       provide: FlightService,
       useFactory: createFlightService,

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
 import { CanDeactivateComponent } from '../../shared/deactivation/can-deactivate.guard';
+import { Flight } from '../flight';
 
 @Component({
   selector: 'app-flight-edit',
@@ -17,6 +18,8 @@ export class FlightEditComponent implements OnInit, CanDeactivateComponent {
 
   sender: Observer<boolean> | undefined;
   showWarning = false;
+
+  flight: Flight | undefined;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -36,6 +39,10 @@ export class FlightEditComponent implements OnInit, CanDeactivateComponent {
       const idAsString = '' + this.id;
       console.log('number:', this.id);
       console.log('string:', idAsString);
+    });
+
+    this.route.data.subscribe((data) => {
+      this.flight = data.flight;
     });
   }
 
