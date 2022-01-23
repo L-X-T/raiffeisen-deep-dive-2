@@ -14,14 +14,14 @@ import { FlightResolver } from './flight-search/flight.resolver';
 
 export const FLIGHT_BOOKING_ROUTES: Routes = [
   {
-    path: 'flight-booking',
-    redirectTo: 'flight-booking/flight-search',
+    path: '',
+    redirectTo: 'flight-search',
     pathMatch: 'full'
   },
   {
-    path: 'flight-booking',
+    path: '',
     component: FlightBookingComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     children: [
       {
         path: 'airports',
