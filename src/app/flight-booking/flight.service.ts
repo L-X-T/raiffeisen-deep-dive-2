@@ -1,5 +1,3 @@
-// src/app/default-flight.service.ts
-
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -36,8 +34,13 @@ export class FlightService {
   }
 
   delay(): void {
-    const date = new Date(this.flights[0].date);
-    date.setTime(date.getTime() + 1000 * 60 * 15);
-    this.flights[0].date = date.toISOString();
+    const ONE_MINUTE = 1000 * 60;
+    const oldFlights = this.flights;
+    const oldFlight = oldFlights[0];
+    const oldDate = new Date(oldFlight.date);
+
+    // Mutable
+    oldDate.setTime(oldDate.getTime() + 15 * ONE_MINUTE);
+    oldFlight.date = oldDate.toISOString();
   }
 }

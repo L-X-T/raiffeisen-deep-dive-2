@@ -7,35 +7,16 @@
 <form #f="ngForm">
   <div class="form-group">
     <label>From:</label>
-    <input [(ngModel)]="from" [ngModelOptions]="{ updateOn: 'change'}" appCity class="form-control" minlength="3" name="from"
-           required>
-  </div>
-
-  <div *ngIf="!f?.controls?.from?.valid" class="error">
-    Es liegen Validierungsfehler für diese Eingabe vor.
-  </div>
-  <div *ngIf="f?.controls?.from?.hasError('required')" class="error">
-    Dieses Feld ist ein Pflichtfeld.
-  </div>
-  <div *ngIf="f?.controls?.from?.hasError('minlength')" class="error">
-    Erfassen Sie bitte min. {{ f?.controls?.from?.errors?.minlength?.requiredLength }} Zeichen.
-  </div>
-
-  <div *ngIf="f?.controls?.from?.hasError('appCity')" class="error">
-    Die Stadt wird nicht angeflogen.
-  </div>
-
-  <div *ngIf="f?.controls?.from?.errors" class="error">
-    Internes Errors-Objekt: {{ f?.controls?.from?.errors | json}}
+    <input [(ngModel)]="from" [ngModelOptions]="{ updateOn: 'change'}" name="from" class="form-control">
   </div>
 
   <div class="form-group">
     <label>To:</label>
-    <input [(ngModel)]="to" class="form-control">
+    <input [(ngModel)]="to" name="to" class="form-control">
   </div>
 
   <div class="form-group">
-    <input [(ngModel)]="delayFilter" id="delayFilter" type="checkbox">
+    <input [(ngModel)]="delayFilter" id="delayFilter" type="checkbox" name="delayFilter">
     &nbsp;
     <label for="delayFilter">Delayed</label>
   </div>
@@ -48,6 +29,10 @@
     <button (click)="delay()" *ngIf="flights.length > 0" class="btn btn-default">
       Delay
     </button>
+
+    <div *ngIf="flights.length > 0">
+      {{flights.length}} flights found!
+    </div>
   </div>
 </form>
 

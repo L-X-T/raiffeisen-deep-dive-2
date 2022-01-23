@@ -37,12 +37,12 @@ In this exercise, you will explore Angular's default change tracking behavior an
     import {ChangeDetectionStrategy} from '@angular/core';
     [...]
     @Component({
-        selector: 'flight-card',
-        templateUrl: 'flight-card.component.html',
-        changeDetection: ChangeDetectionStrategy.OnPush
+      selector: 'flight-card',
+      templateUrl: 'flight-card.component.html',
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     export class FlightCardComponent {
-        [...]
+      [...]
     }
     ```
 
@@ -58,22 +58,22 @@ In this exercise, you will explore Angular's default change tracking behavior an
     ```typescript
     // libs/flight-lib/src/services/flight.service.ts
     
-    delay() {
-        const ONE_MINUTE = 1000 * 60;
+    delay(): void {
+      const ONE_MINUTE = 1000 * 60;
 
-        const oldFlights = this.flights;
-        const oldFlight = oldFlights[0];
-        const oldDate = new Date(oldFlight.date);
+      const oldFlights = this.flights;
+      const oldFlight = oldFlights[0];
+      const oldDate = new Date(oldFlight.date);
         
-        // Mutable
-        // oldDate.setTime(oldDate.getTime() + 15 * ONE_MINUTE );
-        // oldFlight.date = oldDate.toISOString();
+      // Mutable
+      // oldDate.setTime(oldDate.getTime() + 15 * ONE_MINUTE );
+      // oldFlight.date = oldDate.toISOString();
 
-        // Immutable
-        const newDate = new Date(oldDate.getTime() + 15 * ONE_MINUTE);
-        const newFlight: Flight = { ...oldFlight, date: newDate.toISOString() };
-        const newFlights = [ newFlight, ...oldFlights.slice(1) ]
-        this.flights = newFlights;
+      // Immutable
+      const newDate = new Date(oldDate.getTime() + 15 * ONE_MINUTE);
+      const newFlight: Flight = { ...oldFlight, date: newDate.toISOString() };
+      const newFlights = [ newFlight, ...oldFlights.slice(1) ]
+      this.flights = newFlights;
     }
     ```
 
@@ -91,12 +91,13 @@ You find some information about the object spread operator (e. g. `...oldFlight`
     ```typescript
     export class FlightService {
 
-        [...]
+      [...]
 
-        private flightsSubject = new BehaviorSubject<Flight[]>([]);
-        readonly flights$ = this.flightsSubject.asObservable();
+      private flightsSubject = new BehaviorSubject<Flight[]>([]);
+      // eslint-disable-next-line @typescript-eslint/member-ordering
+      readonly flights$ = this.flightsSubject.asObservable();
 
-        [...]
+      [...]
     }
     ```
 
@@ -107,19 +108,16 @@ You find some information about the object spread operator (e. g. `...oldFlight`
     <p>
 
     ```typescript
-    
     load(from: string, to: string): void {
-        const o = this.find(from, to)
-        .subscribe(
-            flights => {
-                this.flights = flights;
+      const o = this.find(from, to).subscribe(
+        (flights) => {
+          this.flights = flights;
 
-                // Add this line:
-                this.flightsSubject.next(flights);
-
-            },
-            err => console.error('Error loading flights', err)
-        );
+          // Add this line:
+          this.flightsSubject.next(flights);
+        },
+        (err) => console.error('Error loading flights', err)
+      );
     }
     ```
 
@@ -133,10 +131,15 @@ You find some information about the object spread operator (e. g. `...oldFlight`
     <p>
 
     ```typescript
-    delay() {
-        [...]
+    delay(): void {
+      [...]
 
-        this.flightsSubject.next(newFlights);
+      // Immutable
+      const newDate = new Date(oldDate.getTime() + 15 * ONE_MINUTE);
+      const newFlight: Flight = { ...oldFlight, date: newDate.toISOString() };
+      const newFlights = [newFlight, ...oldFlights.slice(1)];
+      this.flightsSubject.next(newFlights);
+      this.flights = newFlights;
     }
 
     ```
@@ -154,7 +157,7 @@ You find some information about the object spread operator (e. g. `...oldFlight`
 
     ```html
     <div *ngFor="let f of flights$ | async">
-        [...]
+      [...]
     </div>
     ```
 
@@ -162,20 +165,17 @@ You find some information about the object spread operator (e. g. `...oldFlight`
 
     ```html
     <div class="form-group" *ngIf="flights$ | async as flights">
-        <button (click)="search()" [disabled]="!from || !to"
-            class="btn btn-default">
-            Search
-        </button>
+      <button class="btn btn-default" [disabled]="!from || !to" (click)="search()">
+        Search
+      </button>
 
-        <button *ngIf="flights.length > 0" class="btn btn-default"
-            (click)="delay()">
-            Delay 1st Flight
-        </button>
+      <button *ngIf="flights.length > 0" class="btn btn-default" (click)="delay()">
+        Delay 1st Flight
+      </button>
 
-        <div *ngIf="flights.length > 0">
-            {{flights.length}} flights found!
-        </div>
-
+      <div *ngIf="flights.length > 0">
+        {{flights.length}} flights found!
+      </div>
     </div>
     ```
 7. Start your solution and make sure it works.

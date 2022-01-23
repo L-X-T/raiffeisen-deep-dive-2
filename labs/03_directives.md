@@ -1,14 +1,14 @@
 # Lab: Directives - Deep Dive
 
 - [Lab: Directives - Deep Dive](#lab-directives---deep-dive)
-  - [Working with Attribute Directives](#working-with-attribute-directives)
-    - [Extending existing Controls with Directives](#extending-existing-controls-with-directives)
-    - [Using HostBinding and HostListener](#using-hostbinding-and-hostlistener)
-    - [Bonus: Directives and Template Variables *](#bonus-directives-and-template-variables-)
-    - [Bonus: Working with Templates and Containers *](#bonus-working-with-templates-and-containers-)
-  - [Structural Directives](#structural-directives)
-    - [Implement a Simple DataTable](#implement-a-simple-datatable)
-    - [Bonus: Custom TemplateOutletDirective ***](#bonus-custom-templateoutletdirective-)
+    - [Working with Attribute Directives](#working-with-attribute-directives)
+        - [Extending existing Controls with Directives](#extending-existing-controls-with-directives)
+        - [Using HostBinding and HostListener](#using-hostbinding-and-hostlistener)
+        - [Bonus: Directives and Template Variables *](#bonus-directives-and-template-variables-)
+        - [Bonus: Working with Templates and Containers *](#bonus-working-with-templates-and-containers-)
+    - [Structural Directives](#structural-directives)
+        - [Implement a Simple DataTable](#implement-a-simple-datatable)
+        - [Bonus: Custom TemplateOutletDirective ***](#bonus-custom-templateoutletdirective-)
 
 
 ## Working with Attribute Directives
@@ -24,11 +24,11 @@
 2. Make sure, the new directive is ``declared`` and ``exported`` in your ``SharedModule``.
 
 3. Open the generated file ``click-with-warning.directive.ts`` and adjust it as follows:
-   
+
     ```typescript
     // src/app/shared/controls/click-with-warning.directive.ts
 
-    // Imports aktualisieren:
+    // Update imports:
     import { Directive, ElementRef, OnInit } from '@angular/core';
 
     @Directive({
@@ -36,13 +36,11 @@
     })
     export class ClickWithWarningDirective implements OnInit {
 
-      constructor(private elementRef: ElementRef) {
-      }
+      constructor(private elementRef: ElementRef) {}
 
       ngOnInit(): void {
           this.elementRef.nativeElement.setAttribute('class', 'btn btn-danger');
       }
-
     }
     ```
 
@@ -65,7 +63,7 @@
     ```typescript
     // src/app/shared/controls/click-with-warning.directive.ts
 
-    // Imports aktualisieren:
+    // Update imports:
     import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 
     @Directive({
@@ -73,29 +71,27 @@
     })
     export class ClickWithWarningDirective implements OnInit {
 
-      // Input und Output ergänzen:
+      // Add Input and Output
       @Input() warning = 'Are you sure?';
       @Output() appClickWithWarning = new EventEmitter();
 
-      // HostBinding ergänzen
+      // Add HostBinding
       @HostBinding('class') classBinding: string | undefined;
 
-      constructor(private elementRef: ElementRef) {
-      }
+      constructor(private elementRef: ElementRef) {}
 
-      // HostListener ergänzen:
+      // Add HostListener
       @HostListener('click', ['$event.shiftKey'])
       handleClick(shiftKey: boolean): void {
-          if (shiftKey || confirm(this.warning)) {
-              this.appClickWithWarning.emit();
-          }
+        if (shiftKey || confirm(this.warning)) {
+          this.appClickWithWarning.emit();
+        }
       }
 
       ngOnInit(): void {
-          // Klassen über HostBinding zuweisen:
-          this.classBinding = 'btn btn-danger';
+        // Assign class binding
+        this.classBinding = 'btn btn-danger';
       }
-
     }
     ```
 3. Open the file ``booking-history.component.ts`` and add a delete method with a dummy implementation:
@@ -105,7 +101,7 @@
       console.debug('delete ...');
     }
     ```
- 
+
 4. Open the template ``booking-history.component.html`` and introduce an event handler for the appClickWithWarning event:
 
     ```html
@@ -117,7 +113,7 @@
     ```
 
 5. Start your application (if it isn't still running) and try it out.
-   
+
 ### Bonus: Directives and Template Variables *
 
 1. Open the file ``click-with-warning.directive.ts`` and introduce the ``exportAs`` property in the Directive metadata:
@@ -135,7 +131,7 @@
     ```
 
 2. Open the file ``booking-history.component.html``, and introduce a template variable ``cww`` for the button:
-   
+
     ```html
     <!-- src/app/customer/booking-history/booking-history.component.html -->
 
@@ -145,27 +141,27 @@
     <button (appClickWithWarning)="delete()" #cww="clickWithWarning">Delete</button>
 
     <!-- Use #cww -->
-    <button (click)="cww.handleClick(true)">Delete without asking questions!</button>
+    <button class="btn btn-danger" (click)="cww.handleClick(true)">Delete without asking questions!</button>
     ```
 
-    Please note that this example assigned ``clickWithWarning`` to ``#cww``. This is the same value that was used together with expertAs above. Because of this, Angular knows, that you don't want to reference the button element but the directive applied to it.
+   Please note that this example assigned ``clickWithWarning`` to ``#cww``. This is the same value that was used together with expertAs above. Because of this, Angular knows, that you don't want to reference the button element but the directive applied to it.
 
 3. Start your application (if it isn't still running) and try it out.
 
 ### Bonus: Working with Templates and Containers *
 
-In this bonus lab, you write a ``Tooltip`` directive that adds a template next to the host element and displays it when the mouse cursor is placed over the host. 
+In this bonus lab, you write a ``Tooltip`` directive that adds a template next to the host element and displays it when the mouse cursor is placed over the host.
 
-```html
-<input [appTooltip]="tmpl">
-
-<ng-template #tmpl>
-    <h3>2 Tips for Success</h3>
-    <ol>
-        <li>Don't tell everything!</li>
-    </ol>
-</ng-template>
-```
+   ```html
+   <input [appTooltip]="tmpl">
+   
+   <ng-template #tmpl>
+     <h3>2 Tips for Success</h3>
+     <ol>
+       <li>Don't tell everything!</li>
+     </ol>
+   </ng-template>
+   ```
 
 1. Add a TooltipDirective:
 
@@ -187,21 +183,23 @@ In this bonus lab, you write a ``Tooltip`` directive that adds a template next t
     })
     export class TooltipDirective implements OnInit {
 
-      private viewRef: EmbeddedViewRef<unknown> | undefined;
-
       @Input('appTooltip') template: TemplateRef<unknown> | undefined;
 
-      constructor(
-        private host: ElementRef,
-        private viewContainer: ViewContainerRef) {
-      }
+      private viewRef: EmbeddedViewRef<unknown> | undefined;
 
-      setHidden(hidden: boolean): void {
-        this.viewRef?.rootNodes.forEach(nativeElement => {
-          nativeElement.hidden = hidden;
-        });
-      }
+      constructor(private host: ElementRef, private viewContainer: ViewContainerRef) {}
 
+      // Add HostListeners
+      @HostListener('mouseover')
+      show(): void {
+        this.setHidden(false);
+      }
+    
+      @HostListener('mouseout')
+      hide(): void {
+        this.setHidden(true);
+      }
+      
       ngOnInit(): void {
         if (!this.template) {
           return;
@@ -209,17 +207,13 @@ In this bonus lab, you write a ``Tooltip`` directive that adds a template next t
         this.viewRef = this.viewContainer.createEmbeddedView(this.template);
 
         this.setHidden(true);
-
-        const elm = this.host.nativeElement as HTMLElement;
-        elm.addEventListener('mouseover', () => {
-          this.setHidden(false);
-        });
-
-        elm.addEventListener('mouseout', () => {
-          this.setHidden(true);
+      }
+   
+      private setHidden(isHidden: boolean): void {
+        this.viewRef?.rootNodes.forEach((nativeElement) => {
+          nativeElement.hidden = isHidden;
         });
       }
-
     }
     ```
 
@@ -229,10 +223,10 @@ In this bonus lab, you write a ``Tooltip`` directive that adds a template next t
     <input [appTooltip]="tmpl">
 
     <ng-template #tmpl>
-        <h3>2 Tips for Success</h3>
-        <ol>
-            <li>Don't tell everything!</li>
-        </ol>
+      <h3>2 Tips for Success</h3>
+      <ol>
+        <li>Don't tell everything!</li>
+      </ol>
     </ng-template>
     ```
 
@@ -244,14 +238,14 @@ In this bonus lab, you write a ``Tooltip`` directive that adds a template next t
 
 In this lab, you will implement a simple DataTable with configurable fields:
 
-```html
-<app-data-table [data]="flights">
-    <div *appTableField="let data as 'id'">{{data}}</div>
-    <div *appTableField="let data as 'from'">{{data}}</div>
-    <div *appTableField="let data as 'to'">{{data}}</div>
-    <div *appTableField="let data as 'date'">{{data | date:'dd.MM.yyyy HH:mm'}}</div>
-</app-data-table>
-```
+   ```html
+   <app-data-table [data]="flights">
+     <div *appTableField="let data as 'id'">{{data}}</div>
+     <div *appTableField="let data as 'from'">{{data}}</div>
+     <div *appTableField="let data as 'to'">{{data}}</div>
+     <div *appTableField="let data as 'date'">{{data | date:'dd.MM.yyyy HH:mm'}}</div>
+   </app-data-table>
+   ```
 
 1. Create a ``TableFieldDirective``:
 
@@ -293,7 +287,7 @@ In this lab, you will implement a simple DataTable with configurable fields:
     ```typescript
     // src/app/shared/controls/data-table/data-table.component.ts
 
-    import { Component, ContentChildren, Input, OnInit, QueryList } from '@angular/core';
+    import { Component, ContentChildren, Input, QueryList } from '@angular/core';
     import { TableFieldDirective } from './table-field.directive';
 
     @Component({
@@ -301,22 +295,15 @@ In this lab, you will implement a simple DataTable with configurable fields:
       templateUrl: './data-table.component.html',
       styleUrls: ['./data-table.component.scss']
     })
-    export class DataTableComponent implements OnInit {
-
+    export class DataTableComponent {
       @ContentChildren(TableFieldDirective)
       fields: QueryList<TableFieldDirective> | undefined;
 
+      @Input() data: any[] = [];
+   
       get fieldList() {
         return this.fields?.toArray();
       }
-
-      @Input() data: Array<any> = [];
-
-      constructor() { }
-
-      ngOnInit(): void {
-      }
-
     }
     ```
 
@@ -325,26 +312,23 @@ In this lab, you will implement a simple DataTable with configurable fields:
     <!-- src/app/shared/controls/data-table/data-table.component.html -->
 
     <table class="table">
-
-        <tr *ngFor="let row of data">
-
-            <td *ngFor="let f of fieldList">
-                <ng-container *ngTemplateOutlet="f.templateRef; context: { $implicit: row[f.propName] }">
-                </ng-container>
-            </td>
-
-        </tr>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let f of fieldList">
+           <ng-container *ngTemplateOutlet="f.templateRef; context: { $implicit: row[f.propName] }">
+           </ng-container>
+        </td>
+      </tr>
     </table>
     ```
 
 8. In order to try out your solution, open the file ``booking-history.component.ts`` and introduce a ``flights`` array:
-   
+
     ```typescript
     // src/app/customer/booking-history/booking-history.component.ts
 
-    import { Component, OnInit } from '@angular/core';
+    import { Component } from '@angular/core';
 
-    // Import hinzufügen:
+    // Add import
     import { Flight } from 'src/app/flight-booking/flight';
 
     @Component({
@@ -352,66 +336,59 @@ In this lab, you will implement a simple DataTable with configurable fields:
       templateUrl: './booking-history.component.html',
       styleUrls: ['./booking-history.component.scss']
     })
-    export class BookingHistoryComponent implements OnInit {
-
-      // Eigenschaft hinzufügen
+    export class BookingHistoryComponent {
+      // Add member
       flights: Flight[] = [
-        { id: 1, from: 'Hamburg', to: 'Berlin', date: '2025-02-01T17:00+01:00' },
-        { id: 2, from: 'Hamburg', to: 'Frankfurt', date: '2025-02-01T17:30+01:00' },
-        { id: 3, from: 'Hamburg', to: 'Mallorca', date: '2025-02-01T17:45+01:00' }
+        { id: 1, from: 'Hamburg', to: 'Berlin', date: '2025-02-01T17:00+01:00', delayed: false },
+        { id: 2, from: 'Hamburg', to: 'Frankfurt', date: '2025-02-01T17:30+01:00', delayed: false },
+        { id: 3, from: 'Hamburg', to: 'Mallorca', date: '2025-02-01T17:45+01:00', delayed: false }
       ];
-
-      constructor() { }
-
-      ngOnInit(): void {
-      }
-
     }
     ```
 
 9. Now, within the ``BookingHistoryComponent``'s template, call your ``DataTable``:
-    
+
     ```html
     <!-- src/app/customer/booking-history/booking-history.component.html -->
     [...]
 
     <app-data-table [data]="flights">
-        <div *appTableField="let data as 'id'">{{data}}</div>
-        <div *appTableField="let data as 'from'">{{data}}</div>
-        <div *appTableField="let data as 'to'">{{data}}</div>
-        <div *appTableField="let data as 'date'">{{data | date:'dd.MM.yyyy HH:mm'}}</div>
+      <div *appTableField="let data as 'id'">{{data}}</div>
+      <div *appTableField="let data as 'from'">{{data}}</div>
+      <div *appTableField="let data as 'to'">{{data}}</div>
+      <div *appTableField="let data as 'date'">{{data | date:'dd.MM.yyyy HH:mm'}}</div>
     </app-data-table>
     ```
 
+<!-- 
 ### Bonus: Custom TemplateOutletDirective ***
 
 The TemplateOutletDirective used above leverages a more general low-level concept used by Angular: ViewContainers. They are a logical area representing an element's view. You can use it to insert components dynamically. The following implementation does this by implementing a custom version of the TemplateOutletDirective. Look at it and try to use it in your application:
 
-```typescript
-import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-
-@Directive({
-  selector: '[appCustomTemplateOutlet]'
-})
-export class CustomTemplateOutletDirective implements OnInit {
-
-  @Input('appCustomTemplateOutlet') template: TemplateRef<any> | undefined;
-  @Input('appCustomTemplateOutletContext') context: any;
-
-  constructor(private viewContainer: ViewContainerRef) { }
-
-  ngOnInit(): void {
-    if (!this.template) {
-      return;
-    }
-    this.viewContainer.clear();
-
-    this.viewContainer.createEmbeddedView(this.template, this.context);
-
-    const ref = this.viewContainer.createEmbeddedView(this.template, this.context);
-    const nativeElement = ref.rootNodes.pop();
-  }
-
-}
-```
-
+   ```typescript
+   import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+   
+   @Directive({
+     selector: '[appCustomTemplateOutlet]'
+   })
+   export class CustomTemplateOutletDirective implements OnInit {
+   
+     @Input('appCustomTemplateOutlet') template: TemplateRef<any> | undefined;
+     @Input('appCustomTemplateOutletContext') context: any;
+   
+     constructor(private viewContainer: ViewContainerRef) { }
+   
+     ngOnInit(): void {
+       if (!this.template) {
+         return;
+       }
+       this.viewContainer.clear();
+   
+       this.viewContainer.createEmbeddedView(this.template, this.context);
+   
+       const ref = this.viewContainer.createEmbeddedView(this.template, this.context);
+       const nativeElement = ref.rootNodes.pop();
+     }
+   }
+   ```
+ -->
