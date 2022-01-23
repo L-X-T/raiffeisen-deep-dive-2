@@ -3,11 +3,18 @@
 import { Component } from '@angular/core';
 import { Flight } from '../flight';
 import { FlightService } from '../flight.service';
+import { DefaultFlightService } from '../default-flight.service';
 
 @Component({
   selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
-  styleUrls: ['./flight-search.component.scss']
+  styleUrls: ['./flight-search.component.scss'],
+  providers: [
+    {
+      provide: FlightService,
+      useClass: DefaultFlightService
+    }
+  ]
 })
 export class FlightSearchComponent {
   from = 'Hamburg';
