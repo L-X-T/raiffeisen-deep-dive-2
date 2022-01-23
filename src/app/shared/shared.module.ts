@@ -23,8 +23,8 @@ import { TabComponent } from './controls/tab/tab.component';
 
     // Von der CLI eingefügt
     CityValidationDirective,
-     TabbedPaneComponent,
-     TabComponent
+    TabbedPaneComponent,
+    TabComponent
   ],
   exports: [
     DateComponent,
@@ -36,8 +36,8 @@ import { TabComponent } from './controls/tab/tab.component';
 
     // Neue Einträge
     CityValidationDirective,
-     TabbedPaneComponent,
-     TabComponent
+    TabbedPaneComponent,
+    TabComponent
   ]
 })
 export class SharedModule {}
