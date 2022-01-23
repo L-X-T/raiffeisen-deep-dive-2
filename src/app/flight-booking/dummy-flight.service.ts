@@ -1,22 +1,19 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Flight } from './flight';
-// import { DefaultFlightService } from './default-flight.service';
-import { DummyFlightService } from './dummy-flight.service';
+import { FlightService } from './flight.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root',
-  // useClass: DefaultFlightService,
-  useClass: DummyFlightService
+  providedIn: 'root'
 })
-export abstract class FlightService {
+export class DummyFlightService implements FlightService {
   flights: Flight[] = [];
   flightsSubject = new BehaviorSubject<Flight[]>([]);
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly flights$ = this.flightsSubject.asObservable();
 
-  protected constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
   load(from: string, to: string): void {
     const o = this.find(from, to).subscribe(
@@ -48,5 +45,11 @@ export abstract class FlightService {
     this.flights = newFlights;
   }
 
-  abstract find(from: string, to: string): Observable<Flight[]>;
+  find(from: string, to: string): Observable<Flight[]> {
+    return of([
+      { id: 1, from: 'Frankfurt', to: 'Flagranti', date: '2022-01-02T19:00+01:00' },
+      { id: 2, from: 'Frankfurt', to: 'Kognito', date: '2022-01-02T19:30+01:00' },
+      { id: 3, from: 'Frankfurt', to: 'Mallorca', date: '2022-01-02T20:00+01:00' }
+    ]);
+  }
 }

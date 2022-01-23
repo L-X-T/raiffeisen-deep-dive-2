@@ -2,21 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Flight } from './flight';
-// import { DefaultFlightService } from './default-flight.service';
-import { DummyFlightService } from './dummy-flight.service';
+import { FlightService } from './flight.service';
 
 @Injectable({
-  providedIn: 'root',
-  // useClass: DefaultFlightService,
-  useClass: DummyFlightService
+  providedIn: 'root'
 })
-export abstract class FlightService {
+export class DefaultFlightService implements FlightService {
   flights: Flight[] = [];
   flightsSubject = new BehaviorSubject<Flight[]>([]);
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly flights$ = this.flightsSubject.asObservable();
 
-  protected constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {}
 
   load(from: string, to: string): void {
     const o = this.find(from, to).subscribe(
@@ -28,6 +25,14 @@ export abstract class FlightService {
       },
       (err) => console.error('Error loading flights', err)
     );
+  }
+
+  find(from: string, to: string): Observable<Flight[]> {
+    const url = 'http://www.angular.at/api/flight';
+    const headers = new HttpHeaders().set('Accept', 'application/json');
+    const params = new HttpParams().set('from', from).set('to', to);
+
+    return this.http.get<Flight[]>(url, { headers, params });
   }
 
   delay(): void {
@@ -47,6 +52,4 @@ export abstract class FlightService {
     this.flightsSubject.next(newFlights);
     this.flights = newFlights;
   }
-
-  abstract find(from: string, to: string): Observable<Flight[]>;
 }
