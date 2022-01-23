@@ -11,7 +11,7 @@ export class TabbedPaneComponent implements AfterContentInit {
   tabQueryList: QueryList<TabComponent> | undefined;
 
   activeTab: TabComponent | undefined;
-  currentPage = 0;
+  currentPage = 1;
 
   get tabs(): TabComponent[] {
     return this.tabQueryList?.toArray() ?? [];
@@ -32,5 +32,9 @@ export class TabbedPaneComponent implements AfterContentInit {
       tab.visible = tab === active;
     }
     this.activeTab = active;
+  }
+
+  pageChange(page: number): void {
+    this.activate(this.tabs[page - 1]);
   }
 }
