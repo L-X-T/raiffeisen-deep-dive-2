@@ -24,7 +24,7 @@ import { CustomerModule } from './customer/customer.module';
     HttpClientModule,
     BrowserModule,
     // FlightBookingModule,
-    SharedModule,
+    SharedModule.forRoot(),
     CustomerModule
   ],
   declarations: [AppComponent, SidebarComponent, NavbarComponent, HomeComponent, AboutComponent, NotFoundComponent, BasketComponent],

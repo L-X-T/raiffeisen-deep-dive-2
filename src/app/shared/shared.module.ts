@@ -1,6 +1,6 @@
 // src/app/shared/shared.module.ts
 
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DateComponent } from './date/date.component';
 import { CityPipe } from './city.pipe';
@@ -39,7 +39,6 @@ import { CanDeactivateGuard } from './deactivation/can-deactivate.guard';
     TableFieldDirective,
     DataTableComponent
   ],
-  providers: [AuthGuard, AuthService, CanDeactivateGuard],
   exports: [
     DateComponent,
     CityPipe,
@@ -59,4 +58,18 @@ import { CanDeactivateGuard } from './deactivation/can-deactivate.guard';
     DataTableComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+  static forChild(): ModuleWithProviders<SharedModule> {
+    return {
+      ngModule: SharedModule,
+      providers: []
+    };
+  }
+
+  static forRoot(): ModuleWithProviders<SharedModule> {
+    return {
+      ngModule: SharedModule,
+      providers: [AuthGuard, AuthService, CanDeactivateGuard]
+    };
+  }
+}

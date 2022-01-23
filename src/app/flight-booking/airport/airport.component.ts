@@ -12,7 +12,7 @@ import { AirportService } from './airport.service';
 export class AirportComponent implements OnInit, OnDestroy {
   protected isLoading = true;
 
-  protected airports$?: Observable<string[]>;
+  protected airports$?: Observable<string[]> | undefined;
   private airportsObserver?: Observer<string[]>;
   private airportsSubscription?: Subscription;
 
