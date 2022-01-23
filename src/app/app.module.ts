@@ -18,7 +18,9 @@ import { CustomerModule } from './customer/customer.module';
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(APP_ROUTES),
+    RouterModule.forRoot(APP_ROUTES, {
+      preloadingStrategy: PreloadAllModules
+    }),
     HttpClientModule,
     BrowserModule,
     // FlightBookingModule,
