@@ -17,6 +17,8 @@ import { ClickWithWarningDirective } from './controls/click-with-warning.directi
 import { TooltipDirective } from './tooltip.directive';
 import { TableFieldDirective } from './controls/data-table/table-field.directive';
 import { DataTableComponent } from './controls/data-table/data-table.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -36,6 +38,7 @@ import { DataTableComponent } from './controls/data-table/data-table.component';
     TableFieldDirective,
     DataTableComponent
   ],
+  providers: [AuthGuard, AuthService],
   exports: [
     DateComponent,
     CityPipe,

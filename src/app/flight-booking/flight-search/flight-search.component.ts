@@ -33,7 +33,7 @@ export class FlightSearchComponent {
 
   constructor(private flightService: FlightService) {}
 
-  get flights() {
+  get flights(): Flight[] {
     // We will refactor this to an observable in a later exercise!
     return this.flightService.flights;
   }
