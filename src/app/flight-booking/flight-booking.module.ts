@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { FlightResolver } from './flight-search/flight.resolver';
 
 @NgModule({
-  imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, SharedModule],
+  imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, SharedModule.forChild()],
   declarations: [
     FlightSearchComponent,
     FlightCardComponent,
