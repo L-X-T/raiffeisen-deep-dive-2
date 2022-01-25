@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="header">
+    <h1 class="title">Airports</h1>
+  </div>
+
+  <div class="content">
+    <div class="row">
+      <h2 class="col-12">subscription</h2>
+    </div>
+
+    <ng-container *ngIf="!isLoading; else isLoadingAirports">
+      <div class="row" *ngIf="airports.length > 0; else noAirportsFound">
+        <div class="col-3" *ngFor="let airport of airports">
+          {{ airport }}
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <h2 class="col-12">aysnc pipe</h2>
+    </div>
+
+    <!-- var 3 async pipe -->
+    <ng-container *ngIf="(airports$ | async) as asyncAirports else isLoadingAirports">
+      <div *ngIf="asyncAirports.length > 0 else noAirportsFound" class="row">
+        <div class="col-lg-3" *ngFor="let airport of asyncAirports">
+          {{ airport }}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<ng-template #noAirportsFound>
+  <div class="row">
+    No airports found
+  </div>
+</ng-template>
+
+
+<ng-template #isLoadingAirports>
+  <div class="row">
+    Loading airports ...
+  </div>
+</ng-template>
