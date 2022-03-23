@@ -1,13 +1,21 @@
-<div class="alert alert-danger" *ngIf="errors" role="alert"> {{ fieldLabel }} is invalid. </div>
+<ng-container *ngIf="errors">
+  <div class="alert alert-danger" role="alert"> {{ fieldLabel }} is invalid. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.required" role="alert"> {{ fieldLabel }} is required. </div>
+  <div class="alert alert-danger" *ngIf="errors.required" role="alert"> {{ fieldLabel }} is required. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.minlength" role="alert"> {{ fieldLabel }} minlength is 3. </div>
+  <div class="alert alert-danger" *ngIf="errors.minlength" role="alert"> {{ fieldLabel }} minlength is 3. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.maxlength" role="alert"> {{ fieldLabel }} maxlength is 15. </div>
+  <div class="alert alert-danger" *ngIf="errors.maxlength" role="alert"> {{ fieldLabel }} maxlength is 15. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.pattern" role="alert"> {{ fieldLabel }} has invalid input. </div>
+  <div class="alert alert-danger" *ngIf="errors.pattern" role="alert"> {{ fieldLabel }} has invalid input. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.city" role="alert"> {{ fieldLabel }} needs to be a city. </div>
+  <div class="alert alert-danger" *ngIf="errors && errors.city" role="alert"> {{ fieldLabel }} is {{ errors.city.actualCity }} but should be one of {{ errors.city.validCities }}. </div>
 
-<div class="alert alert-danger" *ngIf="errors?.asyncCity" role="alert"> Async: No flights found with that "{{ fieldLabel }}". </div>
+  <div class="alert alert-danger" *ngIf="errors.asyncCity" role="alert"> Async: No flights found with that "{{ fieldLabel }}". </div>
+
+  <div class="alert alert-danger" *ngIf="errors.roundTrip" role="alert"> Round trips are not allowed! </div>
+
+  <div class="alert alert-danger" *ngIf="errors.asyncMulti" role="alert">
+    No trips were found from {{ errors.asyncMulti.from }} to {{ errors.asyncMulti.to }}!
+  </div>
+</ng-container>
