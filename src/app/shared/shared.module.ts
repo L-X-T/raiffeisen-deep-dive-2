@@ -8,8 +8,6 @@ import { StatusColorPipe } from './status-color.pipe';
 import { StatusFilterPipe } from './status-filter.pipe';
 import { FormsModule } from '@angular/forms';
 
-// Von der CLI eingefügt
-import { CityValidationDirective } from './validation/city-validation.directive';
 import { TabbedPaneComponent } from './controls/tabbed-pane/tabbed-pane.component';
 import { TabComponent } from './controls/tab/tab.component';
 import { TabNavigatorComponent } from './controls/tab-navigator/tab-navigator.component';
@@ -19,6 +17,8 @@ import { TableFieldDirective } from './controls/data-table/table-field.directive
 import { DataTableComponent } from './controls/data-table/data-table.component';
 import { AuthService } from './auth/auth.service';
 
+import { CityValidatorDirective } from './validation/city-validator.directive';
+
 @NgModule({
   imports: [CommonModule, FormsModule],
   declarations: [
@@ -27,15 +27,15 @@ import { AuthService } from './auth/auth.service';
     StatusColorPipe,
     StatusFilterPipe,
 
-    // Von der CLI eingefügt
-    CityValidationDirective,
     TabbedPaneComponent,
     TabComponent,
     TabNavigatorComponent,
     ClickWithWarningDirective,
     TooltipDirective,
     TableFieldDirective,
-    DataTableComponent
+    DataTableComponent,
+
+    CityValidatorDirective
   ],
   exports: [
     DateComponent,
@@ -45,15 +45,15 @@ import { AuthService } from './auth/auth.service';
     FormsModule,
     CommonModule,
 
-    // Neue Einträge
-    CityValidationDirective,
     TabbedPaneComponent,
     TabComponent,
     TabNavigatorComponent,
     ClickWithWarningDirective,
     TooltipDirective,
     TableFieldDirective,
-    DataTableComponent
+    DataTableComponent,
+
+    CityValidatorDirective
   ]
 })
 export class SharedModule {
