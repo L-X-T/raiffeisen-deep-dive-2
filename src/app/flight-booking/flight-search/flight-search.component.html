@@ -2,7 +2,7 @@
 
 <h1>Flight Search</h1>
 
-<form #form="ngForm" roundTrip>
+<form #form="ngForm" [roundTrip]="['from','to']">
   <div class="form-group">
     <label>From:</label>
     <input [(ngModel)]="from"
