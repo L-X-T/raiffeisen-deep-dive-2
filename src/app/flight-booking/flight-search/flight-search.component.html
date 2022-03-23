@@ -15,30 +15,22 @@
            pattern="[a-zA-ZäöüÄÖÜß ]*">
   </div>
 
-  <div *ngIf="form?.controls?.from?.invalid || false" class="text-danger">
-    From is invalid.
-  </div>
-
-  <div *ngIf="form?.controls?.from?.hasError('required') || false" class="text-danger">
-    From is required.
-  </div>
-
-  <div *ngIf="form?.controls?.from?.hasError('minlength') || false" class="text-danger">
-    From minlength is 3.
-  </div>
-
-  <div *ngIf="form?.controls?.from?.hasError('maxlength') || false" class="text-danger">
-    From maxlength is 15.
-  </div>
-
-  <div *ngIf="form?.controls?.from?.hasError('pattern') || false" class="text-danger">
-    From has invalid input.
-  </div>
+  <flight-validation-errors [errors]="form.controls.from.errors" fieldLabel="From">
+  </flight-validation-errors>
 
   <div class="form-group">
     <label>To:</label>
-    <input [(ngModel)]="to" name="to" class="form-control">
+    <input [(ngModel)]="to"
+           name="to"
+           class="form-control"
+           required="required"
+           minlength="3"
+           maxlength="15"
+           pattern="[a-zA-ZäöüÄÖÜß ]*">
   </div>
+
+  <flight-validation-errors [errors]="form.controls.to.errors" fieldLabel="To">
+  </flight-validation-errors>
 
   <div class="form-group">
     <input [(ngModel)]="delayFilter" id="delayFilter" type="checkbox" name="delayFilter">
