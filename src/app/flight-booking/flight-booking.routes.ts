@@ -36,6 +36,11 @@ export const FLIGHT_BOOKING_ROUTES: Routes = [
         loadComponent: () => import('./passenger-search/passenger-search.component').then((c) => c.PassengerSearchComponent)
       },
       {
+        path: 'flight-edit',
+        component: FlightEditComponent,
+        canDeactivate: [canDeactivateGuard]
+      },
+      {
         path: 'flight-edit/:id',
         component: FlightEditComponent,
         canDeactivate: [canDeactivateGuard],

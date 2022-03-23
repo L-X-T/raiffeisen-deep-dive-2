@@ -3,10 +3,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
-import { Observable, Observer, Subscription } from 'rxjs';
+import { from, Observable, Observer, Subscription } from 'rxjs';
 import { CanComponentDeactivate } from '../../shared/deactivation/can-deactivate.guard';
 import { Flight } from '../flight';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { validateCity } from '../../shared/validation/city-validator';
 import { FlightService } from '../flight.service';
 import { validateAsyncCity } from '../../shared/validation/async-city-validator';
@@ -26,18 +26,37 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   flight: Flight | undefined;
 
-  editForm = this.fb.group({
-    id: [0, Validators.required],
-    from: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)], validateAsyncCity(this.flightService)],
-    to: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin'])]],
-    date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]]
-  });
+  editForm = this.fb.group(
+    {
+      id: [0, Validators.required],
+      from: [
+        '',
+        {
+          asyncValidators: validateAsyncCity(this.flightService),
+          validators: [Validators.required, Validators.minLength(3), Validators.maxLength(15)],
+          updateOn: 'blur'
+        }
+      ],
+      to: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(15),
+            validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin'])
+          ],
+          updateOn: 'blur'
+        }
+      ],
+      date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]]
+    },
+    { validators: validateRoundTrip }
+  );
 
   valueChangesSubscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private flightService: FlightService, private fb: FormBuilder, private router: Router) {
-    this.editForm.validator = validateRoundTrip;
-  }
+  constructor(private route: ActivatedRoute, private flightService: FlightService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     console.log(this.router.url);
@@ -99,24 +118,35 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanComponentDeact
   }
 
   save(): void {
-    this.flight = {
-      ...this.flight,
-      id: this.editForm.value.id,
-      from: this.editForm.value.from,
-      to: this.editForm.value.to,
-      date: this.editForm.value.date
-    };
-
-    if (!this.flight.id) {
-      this.flight.id = 0;
+    if (this.editForm.invalid) {
+      this.markFormGroupDirty(this.editForm);
+      return;
     }
 
-    console.log('saving...');
-    console.log(this.flight);
+    this.flight = {
+      ...this.flight,
+      id: Number(this.editForm.value.id),
+      from: '' + this.editForm.value.from,
+      to: '' + this.editForm.value.to,
+      date: '' + this.editForm.value.date
+    };
 
-    this.flightService.save(this.flight).subscribe((flight) => {
-      this.flight = flight;
-      this.editForm.patchValue(flight);
-    });
+    if (this.flight) {
+      if (!this.flight.id) {
+        this.flight.id = 0;
+      }
+
+      console.log('saving...');
+      console.log(this.flight);
+
+      this.flightService.save(this.flight).subscribe((flight) => {
+        this.flight = flight;
+        this.editForm.patchValue(flight);
+      });
+    }
+  }
+
+  private markFormGroupDirty(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach((c) => c.markAsDirty());
   }
 }

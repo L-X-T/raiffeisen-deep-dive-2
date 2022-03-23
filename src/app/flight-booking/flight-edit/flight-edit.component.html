@@ -36,16 +36,25 @@
     <input formControlName="to" class="form-control">
   </div>
 
-  <flight-validation-errors [errors]="editForm.controls.to.errors" fieldLabel="To" />
+  <flight-validation-errors
+    *ngIf="editForm.controls.to.dirty"
+    [errors]="editForm.controls.to.errors"
+    fieldLabel="To" />
 
   <div class="form-group">
     <label>Date:</label>
     <input formControlName="date" class="form-control">
   </div>
 
-  <flight-validation-errors [errors]="editForm.controls.date.errors" fieldLabel="Date" />
+  <flight-validation-errors
+    *ngIf="editForm.controls.date.dirty"
+    [errors]="editForm.controls.date.errors"
+    fieldLabel="Date" />
 
-  <flight-validation-errors [errors]="editForm.errors" fieldLabel="Form" />
+  <flight-validation-errors
+    *ngIf="editForm.dirty"
+    [errors]="editForm.errors"
+    fieldLabel="Form" />
 
   <div class="form-group">
     <button (click)="save()" class="btn btn-default">Save</button>
