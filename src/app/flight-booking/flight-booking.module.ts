@@ -15,6 +15,7 @@ import { FlightService } from './flight.service';
 import { createFlightService } from './flight-service.factory';
 import { HttpClient } from '@angular/common/http';
 import { FlightResolver } from './flight-search/flight.resolver';
+import { FlightValidationErrorsComponent } from './flight-validation-errors/flight-validation-errors.component';
 
 @NgModule({
   imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, SharedModule.forChild()],
@@ -24,7 +25,8 @@ import { FlightResolver } from './flight-search/flight.resolver';
     PassengerSearchComponent,
     FlightBookingComponent,
     FlightEditComponent,
-    AirportComponent
+    AirportComponent,
+    FlightValidationErrorsComponent
   ],
   providers: [
     FlightResolver,
