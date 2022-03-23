@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FLIGHT_BOOKING_ROUTES } from './flight-booking.routes';
 import { FlightBookingComponent } from './flight-booking.component';
 import { FlightEditComponent } from './flight-edit/flight-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AirportComponent } from './airport/airport.component';
 import { FlightService } from './flight.service';
 import { createFlightService } from './flight-service.factory';
@@ -18,7 +18,7 @@ import { FlightResolver } from './flight-search/flight.resolver';
 import { FlightValidationErrorsComponent } from './flight-validation-errors/flight-validation-errors.component';
 
 @NgModule({
-  imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, SharedModule.forChild()],
+  imports: [RouterModule.forChild(FLIGHT_BOOKING_ROUTES), FormsModule, ReactiveFormsModule, SharedModule.forChild()],
   declarations: [
     FlightSearchComponent,
     FlightCardComponent,

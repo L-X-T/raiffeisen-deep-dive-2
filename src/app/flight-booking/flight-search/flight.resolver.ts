@@ -11,6 +11,6 @@ export class FlightResolver implements Resolve<Flight> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Flight> {
     const id = route.params.id;
-    return this.flightService.findById(id).pipe(delay(3000)); // <-- delay!
+    return this.flightService.findById(id).pipe(delay(0)); // <-- add delay here!
   }
 }

@@ -11,6 +11,32 @@
 
 <pre>{{flight | json}}</pre>
 
+<form [formGroup]="editForm">
+  <div class="form-group">
+    <label>Id:</label>
+    <input formControlName="id" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>From:</label>
+    <input formControlName="from" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>To:</label>
+    <input formControlName="to" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Date:</label>
+    <input formControlName="date" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <button (click)="save()" class="btn btn-default">Save</button>
+  </div>
+</form>
+
 <div *ngIf="showWarning" class="alert alert-warning" style="z-index: 99999;">
   <p>
     Data not saved. Do you really want to leave me?
@@ -18,6 +44,5 @@
   <p>
     <button class="btn btn-default" (click)="decide(true)">Yes</button>
     <button class="btn btn-default" (click)="decide(false)">No</button>
-
   </p>
 </div>
