@@ -1,18 +1,19 @@
 // src/app/flight-booking/flight-edit/flight-edit.component.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { CanDeactivateComponent } from '../../shared/deactivation/can-deactivate.guard';
 import { Flight } from '../flight';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-flight-edit',
   templateUrl: './flight-edit.component.html',
   styleUrls: ['./flight-edit.component.scss']
 })
-export class FlightEditComponent implements OnInit, CanDeactivateComponent {
+export class FlightEditComponent implements OnInit, OnDestroy, CanDeactivateComponent {
   id = 0;
   showDetails = false;
 
@@ -21,7 +22,18 @@ export class FlightEditComponent implements OnInit, CanDeactivateComponent {
 
   flight: Flight | undefined;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  editForm: FormGroup;
+
+  valueChangesSubscription: Subscription | undefined;
+
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
+    this.editForm = this.fb.group({
+      id: [1],
+      from: [''],
+      to: [''],
+      date: ['']
+    });
+  }
 
   ngOnInit(): void {
     console.log(this.router.url);
@@ -43,7 +55,21 @@ export class FlightEditComponent implements OnInit, CanDeactivateComponent {
 
     this.route.data.subscribe((data) => {
       this.flight = data.flight;
+      this.editForm.patchValue(data.flight);
     });
+
+    console.log('value', this.editForm.value);
+    console.log('valid', this.editForm.valid);
+    console.log('touched', this.editForm.touched);
+    console.log('dirty', this.editForm.dirty);
+
+    this.valueChangesSubscription = this.editForm.valueChanges.subscribe((v) => {
+      console.debug('valueChanges', v);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.valueChangesSubscription?.unsubscribe();
   }
 
   onRoute(): void {
@@ -66,5 +92,9 @@ export class FlightEditComponent implements OnInit, CanDeactivateComponent {
       this.sender = sender;
       this.showWarning = true;
     });
+  }
+
+  save(): void {
+    console.log(this.editForm?.value);
   }
 }
