@@ -19,6 +19,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { CanDeactivateGuard } from './deactivation/can-deactivate.guard';
 import { CityValidatorDirective } from './validation/city-validator.directive';
+import { AsyncCityValidatorDirective } from './validation/async-city-validator.directive';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -36,7 +37,8 @@ import { CityValidatorDirective } from './validation/city-validator.directive';
     TableFieldDirective,
     DataTableComponent,
 
-    CityValidatorDirective
+    CityValidatorDirective,
+    AsyncCityValidatorDirective
   ],
   exports: [
     DateComponent,
@@ -54,7 +56,8 @@ import { CityValidatorDirective } from './validation/city-validator.directive';
     TableFieldDirective,
     DataTableComponent,
 
-    CityValidatorDirective
+    CityValidatorDirective,
+    AsyncCityValidatorDirective
   ]
 })
 export class SharedModule {
