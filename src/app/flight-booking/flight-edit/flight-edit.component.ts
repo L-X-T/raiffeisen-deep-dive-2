@@ -2,14 +2,15 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, delay, distinctUntilChanged } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { CanComponentDeactivate } from '../../shared/deactivation/can-deactivate.guard';
 import { Flight } from '../flight';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateCity } from '../../shared/validation/city-validator';
 import { FlightService } from '../flight.service';
 import { validateAsyncCity } from '../../shared/validation/async-city-validator';
+import { validateRoundTrip } from '../../shared/validation/round-trip-validator';
 
 @Component({
   selector: 'app-flight-edit',
@@ -34,7 +35,9 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   valueChangesSubscription: Subscription | undefined;
 
-  constructor(private fb: FormBuilder, private flightService: FlightService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private flightService: FlightService, private fb: FormBuilder, private router: Router) {
+    this.editForm.validator = validateRoundTrip;
+  }
 
   ngOnInit(): void {
     console.log(this.router.url);
@@ -64,14 +67,9 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanComponentDeact
     console.log('touched', this.editForm.touched);
     console.log('dirty', this.editForm.dirty);
 
-    this.valueChangesSubscription = this.editForm.valueChanges
-      .pipe(
-        debounceTime(250),
-        distinctUntilChanged((f, t) => f.id === t.id && f.from === t.from && f.to === t.to && f.date === t.date)
-      )
-      .subscribe((v) => {
-        console.debug('valueChanges', v);
-      });
+    this.valueChangesSubscription = this.editForm.valueChanges.subscribe((v) => {
+      console.debug('valueChanges', v);
+    });
   }
 
   ngOnDestroy(): void {
