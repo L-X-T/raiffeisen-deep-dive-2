@@ -13,8 +13,10 @@
            minlength="3"
            maxlength="15"
            pattern="[a-zA-ZäöüÄÖÜß ]*"
-           [city]="['Graz', 'Hamburg', 'München']">
+           asyncCity>
   </div>
+
+  <div *ngIf="form.controls.from.pending">... Executing Async Validator ...</div>
 
   <flight-validation-errors
     *ngIf="form.controls.from.dirty"
