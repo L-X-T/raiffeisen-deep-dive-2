@@ -8,6 +8,8 @@ import { FlightService } from './flight.service';
   providedIn: 'root'
 })
 export class DefaultFlightService implements FlightService {
+  url = 'http://www.angular.at/api/flight';
+
   flights: Flight[] = [];
   flightsSubject = new BehaviorSubject<Flight[]>([]);
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -36,11 +38,14 @@ export class DefaultFlightService implements FlightService {
   }
 
   findById(id: string): Observable<Flight> {
-    const url = 'http://www.angular.at/api/flight';
     const params = new HttpParams().set('id', id);
     const headers = new HttpHeaders().set('Accept', 'application/json');
 
-    return this.http.get<Flight>(url, { params, headers });
+    return this.http.get<Flight>(this.url, { params, headers });
+  }
+
+  save(flight: Flight): Observable<Flight> {
+    return this.http.post<Flight>(this.url, flight);
   }
 
   delay(): void {
