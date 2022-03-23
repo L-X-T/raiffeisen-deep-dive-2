@@ -20,6 +20,7 @@ import { AuthService } from './auth/auth.service';
 import { CityValidatorDirective } from './validation/city-validator.directive';
 import { AsyncCityValidatorDirective } from './validation/async-city-validator.directive';
 import { MultiFieldValidatorDirective } from './validation/multi-field-validator.directive';
+import { AsyncMultiFieldValidatorDirective } from './validation/async-multi-field-validator.directive';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -39,7 +40,8 @@ import { MultiFieldValidatorDirective } from './validation/multi-field-validator
 
     CityValidatorDirective,
     AsyncCityValidatorDirective,
-    MultiFieldValidatorDirective
+    MultiFieldValidatorDirective,
+    AsyncMultiFieldValidatorDirective
   ],
   exports: [
     DateComponent,
@@ -59,7 +61,8 @@ import { MultiFieldValidatorDirective } from './validation/multi-field-validator
 
     CityValidatorDirective,
     AsyncCityValidatorDirective,
-    MultiFieldValidatorDirective
+    MultiFieldValidatorDirective,
+    AsyncMultiFieldValidatorDirective
   ]
 })
 export class SharedModule {
