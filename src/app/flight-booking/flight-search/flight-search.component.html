@@ -12,7 +12,8 @@
            required="required"
            minlength="3"
            maxlength="15"
-           pattern="[a-zA-ZäöüÄÖÜß ]*">
+           pattern="[a-zA-ZäöüÄÖÜß ]*"
+           city>
   </div>
   
   <div *ngIf="form.controls?.from?.pending">... Executing Async Validator ...</div>
