@@ -1,22 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "src/app/ts/**"
-  ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "ignorePatterns": ["projects/**/*", "src/app/ts/**"],
+  "plugins": ["@typescript-eslint"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -36,24 +26,12 @@
             "prefix": ["app", "flight"],
             "style": "kebab-case"
           }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": ["app", "flight"],
-            "style": "camelCase"
-          }
         ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]
