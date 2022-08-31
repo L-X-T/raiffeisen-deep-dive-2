@@ -14,16 +14,26 @@
   </app-tab>
 </app-tabbed-pane>
 
-<button (appClickWithWarning)=delete() #cww="clickWithWarning">Delete</button>
+<div>
+  <button (appClickWithWarning)=delete() #cww="clickWithWarning">Delete</button>
 
-<!-- Use #cww -->
-<button class="btn btn-danger" (click)="cww.handleClick(true)">Delete without asking questions!</button>
+  <!-- Use #cww -->
+  <button class="btn btn-danger" (click)="cww.handleClick(true)">Delete without asking questions!</button>
 
-<input [appTooltip]="tmpl">
+  <input [appTooltip]="tmpl">
 
-<ng-template #tmpl>
-  <h3>2 Tips for Success</h3>
-  <ol>
-    <li>Don't tell everything!</li>
-  </ol>
-</ng-template>
+  <ng-template #tmpl>
+    <h3>2 Tips for Success</h3>
+    <ol>
+      <li>Don't tell everything!</li>
+    </ol>
+  </ng-template>
+</div>
+
+<div>
+  <div *ngTemplateOutlet="tmpl2"></div>
+
+  <ng-template #tmpl2>Hello world!</ng-template>
+
+  <div *ngComponentOutlet="flightSearchComponent"></div>
+</div>
