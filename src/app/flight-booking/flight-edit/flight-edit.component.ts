@@ -8,6 +8,8 @@ import { CanComponentDeactivate } from '../../shared/deactivation/can-deactivate
 import { Flight } from '../flight';
 import { FormBuilder, Validators } from '@angular/forms';
 import { validateCity } from '../../shared/validation/city-validator';
+import { FlightService } from '../flight.service';
+import { validateAsyncCity } from '../../shared/validation/async-city-validator';
 
 @Component({
   selector: 'app-flight-edit',
@@ -25,20 +27,14 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   editForm = this.fb.group({
     id: [0, Validators.required],
-    from: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(15), validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin'])]
-      ],
-    to: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(15), validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin'])]
-      ],
+    from: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)], validateAsyncCity(this.flightService)],
+    to: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), validateCity(['Graz', 'Wien', 'Hamburg', 'Berlin'])]],
     date: ['', [Validators.required, Validators.minLength(33), Validators.maxLength(33)]]
   });
 
   valueChangesSubscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private flightService: FlightService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     console.log(this.router.url);

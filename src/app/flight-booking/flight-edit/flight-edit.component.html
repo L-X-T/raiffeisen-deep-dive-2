@@ -24,7 +24,12 @@
     <input formControlName="from" class="form-control">
   </div>
 
-  <flight-validation-errors [errors]="editForm.controls.from.errors" fieldLabel="From" />
+  <flight-validation-errors
+    *ngIf="editForm.controls.from.dirty"
+    [errors]="editForm.controls.from.errors"
+    [pending]="editForm.controls.from.pending"
+    fieldLabel="From"
+  />
 
   <div class="form-group">
     <label>To:</label>

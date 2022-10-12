@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 const DEBUG = !environment.production;
 
 export const createFlightService = (http: HttpClient) => {
-  if (DEBUG) {
+  if (DEBUG && false) {
     return new DummyFlightService(http);
   } else {
     return new DefaultFlightService(http);

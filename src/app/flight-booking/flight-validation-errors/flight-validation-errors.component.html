@@ -19,3 +19,5 @@
     No trips were found from {{ errors.asyncMulti.from }} to {{ errors.asyncMulti.to }}!
   </div>
 </ng-container>
+
+<div class="alert alert-warning" *ngIf="pending" role="alert"> {{ fieldLabel }} is being checked. </div>
