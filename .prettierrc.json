@@ -8,7 +8,14 @@
   "tabWidth": 2,
   "trailingComma": "none",
   "useTabs": false,
+  "endOfLine": "auto",
   "overrides": [
+    {
+      "files": ["*.css"],
+      "options": {
+        "parser": "css"
+      }
+    },
     {
       "files": ["*.html"],
       "options": {
@@ -25,6 +32,12 @@
       "files": ["*.scss"],
       "options": {
         "parser": "scss"
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "options": {
+        "parser": "typescript"
       }
     }
   ]

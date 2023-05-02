@@ -16,7 +16,9 @@ export class FlightSearchComponent {
   delayFilter = false;
 
   basket: { [key: number]: boolean } = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     3: true,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     5: true
   };
 
