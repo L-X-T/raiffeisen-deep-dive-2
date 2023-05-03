@@ -10,16 +10,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { PreloadAllModules, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { SharedModule } from './shared/shared.module';
 import { BasketComponent } from './basket/basket.component';
 import { CustomerModule } from './customer/customer.module';
+import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
 
 @NgModule({
   imports: [
+    QuicklinkModule,
     RouterModule.forRoot(APP_ROUTES, {
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: QuicklinkStrategy
     }),
     HttpClientModule,
     BrowserModule,
