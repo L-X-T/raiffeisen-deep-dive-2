@@ -27,10 +27,14 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'flight-booking',
-    loadChildren: () => import('./flight-booking/flight-booking.module').then((esm) => esm.FlightBookingModule),
+    loadChildren: () => import('./flight-booking/flight-booking.module').then((m) => m.FlightBookingModule),
     data: {
       preload: true
     }
+  },
+  {
+    path: 'customer',
+    loadChildren: () => import('./customer/customer.module').then((m) => m.CustomerModule)
   },
   {
     path: '**',
