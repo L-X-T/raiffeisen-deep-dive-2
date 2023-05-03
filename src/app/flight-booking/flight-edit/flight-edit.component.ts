@@ -96,5 +96,6 @@ export class FlightEditComponent implements OnInit, OnDestroy, CanDeactivateComp
 
   save(): void {
     console.log(this.editForm?.value);
+    this.flight = { ...this.editForm.value, delayed: this.flight?.delayed };
   }
 }

@@ -5,15 +5,8 @@
 <form #form="ngForm" [roundTrip]="['from','to']" [asyncMulti]="['from','to']">
   <div class="form-group">
     <label>From:</label>
-    <input [(ngModel)]="from"
-           [ngModelOptions]="{ updateOn: 'change'}"
-           name="from"
-           class="form-control"
-           required="required"
-           minlength="3"
-           maxlength="15"
-           pattern="[a-zA-ZäöüÄÖÜß ]*"
-           asyncCity>
+    <input [(ngModel)]="from" [ngModelOptions]="{ updateOn: 'change'}" name="from" class="form-control"
+      required="required" minlength="3" maxlength="15" pattern="[a-zA-ZäöüÄÖÜß ]*" asyncCity>
   </div>
 
   <div *ngIf="form.controls.from.pending">... Executing Async Validator ...</div>
@@ -23,13 +16,8 @@
 
   <div class="form-group">
     <label>To:</label>
-    <input [(ngModel)]="to"
-           name="to"
-           class="form-control"
-           required="required"
-           minlength="3"
-           maxlength="15"
-           pattern="[a-zA-ZäöüÄÖÜß ]*">
+    <input [(ngModel)]="to" name="to" class="form-control" required="required" minlength="3" maxlength="15"
+      pattern="[a-zA-ZäöüÄÖÜß ]*">
   </div>
 
   <flight-validation-errors [errors]="form.controls.to.errors" fieldLabel="To">
@@ -47,8 +35,7 @@
   </flight-validation-errors>
 
   <div class="form-group" *ngIf="flights$ | async as flights">
-    <button [disabled]="!to || !from || form.invalid || form.pending"
-            (click)="search()" class="btn btn-default">
+    <button [disabled]="!to || !from || form.invalid || form.pending" (click)="search()" class="btn btn-default">
       Search
     </button>
 
@@ -65,7 +52,14 @@
 
 <div class="row">
   <div *ngFor="let f of flights$ | async" class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
-    <flight-card [(selected)]="basket[f.id]" [item]="f">
+    <flight-card [selected]="basket[f.id]" [item]="f">
+      <h2 id="header">Hallo</h2>
+      <p class="actions">
+        <button (click)="basket[f.id] = !basket[f.id]" class="btn btn-default">
+          {{ basket[f.id] ? 'Remove' : 'Select' }}
+        </button>
+        <a [routerLink]="['../flight-edit', f?.id, { showDetails:false }]" class="btn btn-default">Edit</a>
+      </p>
     </flight-card>
   </div>
 </div>

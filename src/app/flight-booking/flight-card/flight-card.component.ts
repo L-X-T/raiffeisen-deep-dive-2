@@ -1,17 +1,6 @@
 // src/app/flight-card/flight-card.component.ts
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Flight } from '../flight';
 
 @Component({
@@ -21,9 +10,8 @@ import { Flight } from '../flight';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlightCardComponent implements OnInit, OnChanges {
-  @Input() item: Flight | null = null;
+  @Input() item?: Flight | null = null;
   @Input() selected = false;
-  @Output() selectedChange = new EventEmitter<boolean>();
 
   constructor(private element: ElementRef, private zone: NgZone) {
     console.debug('ctor', this.item);
@@ -42,16 +30,6 @@ export class FlightCardComponent implements OnInit, OnChanges {
     if (changes.selected) {
       console.debug('ngOnChanges: selected');
     }
-  }
-
-  select() {
-    this.selected = true;
-    this.selectedChange.emit(true);
-  }
-
-  deselect() {
-    this.selected = false;
-    this.selectedChange.emit(false);
   }
 
   blink() {

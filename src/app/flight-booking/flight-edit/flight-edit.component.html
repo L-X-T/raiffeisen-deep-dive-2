@@ -9,8 +9,6 @@
 
 <button class="btn btn-warning" (click)="onRoute()">Route</button>
 
-<pre>{{flight | json}}</pre>
-
 <form [formGroup]="editForm">
   <div class="form-group">
     <label>Id:</label>
@@ -33,7 +31,10 @@
   </div>
 
   <div class="form-group">
-    <button (click)="save()" class="btn btn-default">Save</button>
+    <pre>{{flight | json}}</pre>
+    <flight-card [item]="flight">
+       <button (click)="save()" class="btn btn-default">Save</button>
+    </flight-card>
   </div>
 </form>
 
