@@ -4,14 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
-import { CanDeactivateComponent } from '../../shared/deactivation/can-deactivate.guard';
+import { CanComponentDeactivate } from '../../shared/deactivation/can-deactivate.guard';
 
 @Component({
   selector: 'app-flight-edit',
   templateUrl: './flight-edit.component.html',
   styleUrls: ['./flight-edit.component.scss']
 })
-export class FlightEditComponent implements OnInit, CanDeactivateComponent {
+export class FlightEditComponent implements OnInit, CanComponentDeactivate {
   id = 0;
   showDetails = false;
 
