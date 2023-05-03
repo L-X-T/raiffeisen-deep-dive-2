@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { FlightSearchComponent } from './flight-search/flight-search.component';
 import { FlightCardComponent } from './flight-card/flight-card.component';
-import { PassengerSearchComponent } from './passenger-search/passenger-search.component';
+// import { PassengerSearchComponent } from './passenger-search/passenger-search.component';
 import { RouterModule } from '@angular/router';
 import { FLIGHT_BOOKING_ROUTES } from './flight-booking.routes';
 import { FlightBookingComponent } from './flight-booking.component';
@@ -21,7 +21,7 @@ import { FlightResolver } from './flight-search/flight.resolver';
   declarations: [
     FlightSearchComponent,
     FlightCardComponent,
-    PassengerSearchComponent,
+    // PassengerSearchComponent,
     FlightBookingComponent,
     FlightEditComponent,
     AirportComponent

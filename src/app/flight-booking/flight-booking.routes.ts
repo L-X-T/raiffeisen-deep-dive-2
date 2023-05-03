@@ -33,7 +33,7 @@ export const FLIGHT_BOOKING_ROUTES: Routes = [
       },
       {
         path: 'passenger-search',
-        component: PassengerSearchComponent
+        loadComponent: () => import('./passenger-search/passenger-search.component').then((c) => c.PassengerSearchComponent)
       },
       {
         path: 'flight-edit/:id',
