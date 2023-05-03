@@ -32,10 +32,10 @@ export const APP_ROUTES: Routes = [
       preload: true
     }
   },
-  {
+  /*{
     path: 'customer',
     loadChildren: () => import('./customer/customer.module').then((m) => m.CustomerModule)
-  },
+  },*/
   {
     path: '**',
     component: NotFoundComponent

@@ -3,7 +3,7 @@ import { BookingHistoryComponent } from './booking-history/booking-history.compo
 
 export const CUSTOMER_ROUTES: Routes = [
   {
-    path: 'booking-history',
+    path: 'customer/booking-history',
     component: BookingHistoryComponent
   }
 ];
