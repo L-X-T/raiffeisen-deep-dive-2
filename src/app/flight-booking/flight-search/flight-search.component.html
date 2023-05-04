@@ -4,9 +4,9 @@
 
 <form #form="ngForm">
   <div class="form-group">
-    <label>From:</label>
+    <label>From *:</label>
     <input [(ngModel)]="from"
-           [ngModelOptions]="{ updateOn: 'change'}"
+           [ngModelOptions]="{ updateOn: 'blur'}"
            name="from"
            class="form-control"
            required="required"
@@ -15,12 +15,15 @@
            pattern="[a-zA-ZäöüÄÖÜß ]*">
   </div>
 
-  <flight-validation-errors [errors]="form.controls.from.errors" fieldLabel="From">
+  <flight-validation-errors
+    *ngIf="form.controls.from.dirty"
+    [errors]="form.controls.from.errors" fieldLabel="From">
   </flight-validation-errors>
 
   <div class="form-group">
-    <label>To:</label>
+    <label>To *:</label>
     <input [(ngModel)]="to"
+           [ngModelOptions]="{ updateOn: 'blur'}"
            name="to"
            class="form-control"
            required="required"
@@ -29,7 +32,9 @@
            pattern="[a-zA-ZäöüÄÖÜß ]*">
   </div>
 
-  <flight-validation-errors [errors]="form.controls.to.errors" fieldLabel="To">
+  <flight-validation-errors
+    *ngIf="form.controls.to.dirty"
+    [errors]="form.controls.to.errors" fieldLabel="To">
   </flight-validation-errors>
 
   <div class="form-group">
